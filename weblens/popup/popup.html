@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebLens</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="weblens-app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-row">
+        <div class="logo-icon">🔍</div>
+        <div class="brand-titles">
+          <h1 class="app-title">WebLens</h1>
+          <p class="app-tagline">Task-Aware Webpage Intelligence</p>
+        </div>
+        <div id="statusPill" class="status-pill idle">Idle</div>
+      </div>
+    </header>
+
+    <!-- Task Lens Selection -->
+    <section class="task-section">
+      <label class="section-label">Select Task Lens</label>
+      <div class="task-grid" role="radiogroup" aria-label="Task Lens Selector">
+        <button type="button" class="task-btn active" data-task="learn" title="Learn concepts and core findings">
+          <span class="btn-icon">💡</span>
+          <span class="btn-text">Learn</span>
+        </button>
+        <button type="button" class="task-btn" data-task="compare" title="Compare features, pricing, and specs">
+          <span class="btn-icon">⚖️</span>
+          <span class="btn-text">Compare</span>
+        </button>
+        <button type="button" class="task-btn" data-task="decide" title="Decide with benefits, risks, and evidence">
+          <span class="btn-icon">🎯</span>
+          <span class="btn-text">Decide</span>
+        </button>
+        <button type="button" class="task-btn" data-task="technical" title="Extract APIs, config, and technical specs">
+          <span class="btn-icon">⚡</span>
+          <span class="btn-text">Technical</span>
+        </button>
+        <button type="button" class="task-btn" data-task="custom" title="Find information matching custom keywords">
+          <span class="btn-icon">✨</span>
+          <span class="btn-text">Custom</span>
+        </button>
+      </div>
+
+      <!-- Task Context Description -->
+      <p id="taskDescription" class="task-desc">
+        Understand core concepts, definitions, and key findings.
+      </p>
+
+      <!-- Custom Query Field (hidden by default) -->
+      <div id="customQueryContainer" class="custom-query-box hidden">
+        <label for="customQueryInput" class="input-label">Custom Focus Keywords:</label>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="customQueryInput"
+            class="query-input"
+            placeholder="e.g. pricing, refund policy, battery life..."
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <!-- Action Controls -->
+      <div class="actions-row">
+        <button id="analyzeBtn" class="primary-btn">
+          <span class="btn-spinner hidden" id="loadingSpinner"></span>
+          <span id="analyzeBtnText">Analyze Page</span>
+        </button>
+        <button id="restoreBtn" class="secondary-btn" title="Remove all highlights and restore webpage">
+          Restore Page
+        </button>
+      </div>
+    </section>
+
+    <!-- Error / Warning Banner -->
+    <div id="errorBanner" class="banner error hidden">
+      <span class="banner-icon">⚠️</span>
+      <span id="errorMessage" class="banner-text">Error message</span>
+    </div>
+
+    <!-- Results Area / Information Map -->
+    <main id="resultsArea" class="results-container hidden">
+      <!-- Summary Bar -->
+      <div class="summary-card">
+        <div class="summary-metric">
+          <span class="metric-value" id="metricRelevantCount">0</span>
+          <span class="metric-label">Relevant Points</span>
+        </div>
+        <div class="summary-metric">
+          <span class="metric-value" id="metricCategoriesCount">0</span>
+          <span class="metric-label">Categories</span>
+        </div>
+        <div class="summary-metric">
+          <span class="metric-value" id="metricScanTime">0ms</span>
+          <span class="metric-label">Scan Time</span>
+        </div>
+      </div>
+
+      <!-- Information Map Categories -->
+      <section class="info-map-section">
+        <h2 class="results-heading">Information Map</h2>
+        <div id="categoryCardsList" class="category-cards-list">
+          <!-- Dynamically populated category cards -->
+        </div>
+      </section>
+
+      <!-- Information Gaps Section -->
+      <section id="gapsSection" class="gaps-section hidden">
+        <div class="gaps-header">
+          <span class="gaps-icon">🔍</span>
+          <h3 class="gaps-title">Information Gaps</h3>
+        </div>
+        <p class="gaps-intro">Important expected topics for this task were not detected:</p>
+        <ul id="gapsList" class="gaps-list">
+          <!-- Dynamically populated gaps -->
+        </ul>
+      </section>
+    </main>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="empty-state hidden">
+      <div class="empty-icon">📑</div>
+      <p class="empty-title">No Relevant Information Found</p>
+      <p class="empty-desc">Try switching tasks or entering different custom keywords.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span class="footer-note">WebLens MVP &bull; Click <strong>View Source</strong> to jump to page elements</span>
+    </footer>
+  </div>
+
+  <!-- Shared Scripts loaded in popup for constants and message types -->
+  <script src="../shared/constants.js"></script>
+  <script src="../shared/messageTypes.js"></script>
+  <script src="../shared/utils.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
